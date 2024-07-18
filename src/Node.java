@@ -4,8 +4,8 @@
     @author Eleftherios Kalligiannakis
  */
 
-import java.awt.*;
 import java.util.ArrayList;
+import java.awt.Color;
 
 public class Node {
     private ArrayList<Node> adjList;

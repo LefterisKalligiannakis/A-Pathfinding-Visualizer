@@ -4,7 +4,7 @@
     @author Eleftherios Kalligiannakis
  */
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 
 
@@ -32,14 +32,11 @@ public class Graph {
         return null;
     }
 
-
     public void makeWall(int x, int y) {
         Node node = grid[x][y];
-        System.out.println(node.getfCost() + " " + node.getgCost() + " " + node.gethCost());
         node.color = Color.BLACK;
         node.isWall = true;
     }
-
 
     public void removeWall(int x, int y) {
         Node node = grid[x][y];
@@ -122,7 +119,7 @@ public class Graph {
         return sizeY;
     }
 
-
+    public ArrayList<Node> getNodeList() { return nodeList; }
 
 
 

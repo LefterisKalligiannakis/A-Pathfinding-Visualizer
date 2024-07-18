@@ -6,8 +6,7 @@
  */
 
 import java.awt.Color;
-import java.util.*;
-
+import java.util.ArrayList;
 
 public class Pathfinder implements Runnable{
     Graph graph;
@@ -117,10 +116,7 @@ public class Pathfinder implements Runnable{
                 }
             }
         }
-        openList.clear();
-        checkedList.clear();
-        current = start;
-        goalReached = false;
+
     }
 
 
@@ -183,9 +179,28 @@ public class Pathfinder implements Runnable{
             if(!node.equals(start) && !node.equals(end))
                 node.color = Color.CYAN;
         }
-
     }
 
+    public void clearSearch(){
+        ArrayList<Node> list = graph.getNodeList();
+        for(Node node : list){
+            if(!node.isWall && !node.equals(start) && !node.equals(end)){
+                node.color = Color.WHITE;
+                node.isChecked = false;
+                node.isOpen = false;
+            }
+        }
+        start.isChecked = false;
+        start.isOpen = false;
+        end.isChecked = false;
+        end.isOpen = false;
 
+        openList.clear();
+        checkedList.clear();
+
+        current = start;
+        goalReached = false;
+        frame.repaint();
+    }
 
 }

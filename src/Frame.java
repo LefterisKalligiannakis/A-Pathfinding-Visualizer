@@ -9,15 +9,26 @@
  */
 
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
+import java.awt.event.InputEvent;
 
-public class Frame extends JPanel implements ActionListener, MouseListener, MouseMotionListener, KeyListener, MouseWheelListener {
+
+
+public class Frame extends JPanel implements MouseListener, MouseMotionListener, KeyListener, MouseWheelListener {
 
     private final int WIDTH = 930;
     private final int HEIGHT = 950;
-    private int size = 15; // square size
+    private int squareSize = 15;
     Pathfinder pathfinder;
     final OptionHandler optionhandler;
     private JFrame window;
@@ -73,10 +84,10 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
         g.fillRect(0, 0, WIDTH, HEIGHT);
 
 
-        for (int i = 0; i < this.getHeight(); i += size) {
-            for (int j = 0; j < this.getWidth(); j += size) {
+        for (int i = 0; i < this.getHeight(); i += squareSize) {
+            for (int j = 0; j < this.getWidth(); j += squareSize) {
                 g.setColor(pathfinder.graph.getNode(row, col).color);
-                g.fillRect(i, j, size - 1, size - 1);
+                g.fillRect(i, j, squareSize - 1, squareSize - 1);
                 col++;
             }
             col = 0;
@@ -108,6 +119,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
                 Thread thread = new Thread(pathfinder);
                 thread.start();
             }
+            if(pathfinder.goalReached){
+                pathfinder.clearSearch();
+                isRan = false;
+            }
+
         }
 
         if (key == KeyEvent.VK_BACK_SPACE) {
@@ -131,8 +147,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
         int mx = e.getX();
         // mouse coordinates y
         int my = e.getY();
-        rolloverx = mx / size;
-        rollovery = my / size;
+        rolloverx = mx / squareSize;
+        rollovery = my / squareSize;
         if (diagonals != optionhandler.diagonals.isSelected()) {
             diagonals = optionhandler.diagonals.isSelected();
             reset();
@@ -183,8 +199,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
     @Override
     public void mouseDragged(MouseEvent e) {
         if (isMousePressed) {
-            rolloverx = e.getX() / size;
-            rollovery = e.getY() / size;
+            rolloverx = e.getX() / squareSize;
+            rollovery = e.getY() / squareSize;
 
             int modifiers = e.getModifiersEx(); //e.getButton() doesn't work for some reason...
 
@@ -208,22 +224,18 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
     public void mouseWheelMoved(MouseWheelEvent e) {
         int rotation = e.getWheelRotation();
 
-        if (rotation == 1 && size > 15) {
-            size -= 5;
+        if (rotation == 1 && squareSize > 15) {
+            squareSize -= 5;
             repaint();
         }
         if(rotation == -1){
-            size += 5;
+            squareSize += 5;
             repaint();
         }
 
     }
     @Override
     public void mouseClicked(MouseEvent e) {
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
     }
 
     @Override

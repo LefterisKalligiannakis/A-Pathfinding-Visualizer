@@ -4,10 +4,16 @@
     @author Eleftherios Kalligiannakis
 */
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.JCheckBox;
+import javax.swing.SwingConstants;
+
+import java.awt.Graphics;
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 
 public class OptionHandler extends JPanel {
     JCheckBox diagonals;
